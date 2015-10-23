@@ -6,9 +6,9 @@ using namespace std;
 // Defines algorithms for getting coocurrence entries for different
 // directions.
 // TODO: Split up into separate functions.
-int get_entry(int **a, int n, int y, int x) {
+int get_entry(int a[100][100], int n, int k, int y, int x) {
   int i, j, cnt = 0, tmp = 0;
-  switch (k) 
+  switch (k) {
     case 0: {
       // 0 degree direction.
       for (i=0; i < n; ++i) {
@@ -17,7 +17,6 @@ int get_entry(int **a, int n, int y, int x) {
           cnt += (a[i][j] == x && a[i][j+1] == y);
         }
       }
-      break;
     }
     case 1: {
       // 45 degree direction.
@@ -27,7 +26,6 @@ int get_entry(int **a, int n, int y, int x) {
           cnt += (a[i][j] == x && a[i-1][j+1] == y);
         }
       }
-      break;
     }
     case 2: {
       // 90 degree direction.
@@ -37,7 +35,6 @@ int get_entry(int **a, int n, int y, int x) {
           cnt += (a[j][i] == x && a[j+1][i] == y);
         }
       }
-      break;
     }
     case 3: {
       // 135 degree direction.
@@ -47,14 +44,15 @@ int get_entry(int **a, int n, int y, int x) {
           cnt += (a[i][j] == x && a[i-1][j-1] == y);
         }
       }
-      break;
     }
+  }
+  return cnt;
 }
 
 int main() {
   // m - number of intensities.
   // n - dimension of image.
-  int m, n, i, j, lvl, curr;
+  int m, n, i, j, k;
   cin >> m >> n;
   int a[n][n];
   int b[MAX][m][m];
@@ -63,7 +61,8 @@ int main() {
       cin >> a[i][j];
     }
   }
-  
+ 
+  // TODO: Do not pass 2d array into function. 
   for (k=0; k<MAX; ++k) {
     for (i=0; i<m; ++i) {
       for (j=0; j<m; ++j) {
